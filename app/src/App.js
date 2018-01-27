@@ -6,6 +6,8 @@ import Tubes from './components/tubes';
 import Models from './components/models';
 import MessageBox from './components/messages';
 
+import { executeLink } from './api/models.api';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -30,6 +32,24 @@ class App extends Component {
       });
     }
   }
+  drive() {
+    const self = this;
+    return (e) => {
+      executeLink(self.state.apiBaseUrl, {
+        $url: '/drive/start?controller=pirf',
+        $method: 'POST'
+      }, self.onMessage);
+    }
+  }
+  stop() {
+    const self = this;
+    return (e) => {
+      executeLink(self.state.apiBaseUrl, {
+        $url: '/drive/stop',
+        $method: 'POST'
+      }, self.onMessage);
+    }
+  }
   //
   onMessage() {
     const self = this;
@@ -51,6 +71,8 @@ class App extends Component {
             <input type="text" className="form-control" placeholder="API url (leave empty if same server)" onChange={this.onApiBaseUrlChange()} value={this.state.tempBaseUrl} onBlur={this.validateApiUrl()} />
             <div className="input-group-append">
               <button type="button" className="btn btn-outline-primary" id="basic-addon2" onClick={this.validateApiUrl()}>Refresh</button>
+              <button type="button" className="btn btn-outline-primary" id="basic-addon2" onClick={this.drive()}>Drive</button>
+              <button type="button" className="btn btn-outline-danger" id="basic-addon2" onClick={this.stop()}>Stop</button>
             </div>          
             </div>
           </div>

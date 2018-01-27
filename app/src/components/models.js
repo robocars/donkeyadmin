@@ -77,9 +77,8 @@ class Models extends Component {
                 {(this.state.models || []).map((model, idx) => {
                     return <li className="list-group-item" key={idx}>
                     <div className="row">
-                        <div className="col-md-8"><span>{model.name}</span></div>
+                        <div className="col-md-10"><span>{model.name}</span></div>
                         <div className="col-md-2"><button type="button" className="btn btn-outline-primary" onClick={this.executeModelLink(model.$links.drive)}>Drive</button></div>
-                        <div className="col-md-2"><button type="button" className="btn btn-outline-primary" onClick={this.executeModelLink(model.$links.stop)}>Stop</button></div>
                         </div>
                     </li>
                 })}
