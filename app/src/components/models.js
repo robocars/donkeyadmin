@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { getModels, executeLink } from '../api/models.api';
-import io from 'socket.io-client';
 
 class Models extends Component {
     constructor(props) {
@@ -11,7 +10,6 @@ class Models extends Component {
             filename: 'Choose file'
         }
     }
-    socket = null;
     async loadModels(baseUrl) {
         const models = await getModels(baseUrl, this.props.onMessage);
         this.setState({
@@ -19,28 +17,12 @@ class Models extends Component {
             apiBaseUrl: baseUrl || ''
         });
     }
-    setupSocket(apiBaseUrl) {
-        if (this.socket) this.socket.close();
-        this.socket = io(apiBaseUrl || `${window.location.protocol}//${window.location.host}`);
-        this.socket.on('drive', (message) => {
-            this.props.onMessage({
-                type: message.type,
-                message: `${new Date().toISOString()} - DRIVE - ${message.type} - ${message.message}`
-            });
-        });
-    }
     async componentWillMount() {
         await this.loadModels(this.props.apiBaseUrl);
-        this.setupSocket(this.props.apiBaseUrl);
-    }
-    componentWillUnmount() {
-        if (this.socket) this.socket.close();
-        this.socket = null;
     }
     async componentWillReceiveProps(nextProps) {
         if (nextProps.apiBaseUrl !== this.props.apiBaseUrl) {
             await this.loadModels(nextProps.apiBaseUrl);
-            this.setupSocket(nextProps.apiBaseUrl);
         }
     }
     onFileChange() {

@@ -44,6 +44,7 @@ router.post('/drive/start', async (req, res) => {
             type: 'error',
             message: err.message
         });
+        pyshell = null;
     });
 });
 

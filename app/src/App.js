@@ -86,7 +86,7 @@ class App extends Component {
           </div>
           <div className = "row">
             <div className="col-md-12">
-              <MessageBox messages={this.state.messages} />
+              <MessageBox apiBaseUrl={this.state.apiBaseUrl} onMessage={this.onMessage()} messages={this.state.messages} />
             </div>
           </div>
         </div>

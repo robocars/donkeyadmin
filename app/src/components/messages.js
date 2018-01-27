@@ -1,15 +1,35 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
 
 class MessageBox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: []
+            messages: [],
+            apiBaseUrl: ''
         }
     }
-
+    socket = null;
+    setupSocket(apiBaseUrl) {
+        if (this.socket) this.socket.close();
+        this.socket = io(apiBaseUrl || `${window.location.protocol}//${window.location.host}`);
+        this.socket.on('drive', (message) => {
+            this.props.onMessage({
+                type: message.type,
+                message: `${new Date().toISOString()} - DRIVE - ${message.type} - ${message.message}`
+            });
+        });
+    }
+    componentWillUnmount() {
+        if (this.socket) this.socket.close();
+        this.socket = null;
+    }
+    componentWillMount() {
+        this.setupSocket(this.props.apiBaseUrl);
+    }
     componentWillReceiveProps(nextProps) {
         this.setState(nextProps);
+        this.setupSocket(nextProps.apiBaseUrl);
     }
     render() {
         return (
