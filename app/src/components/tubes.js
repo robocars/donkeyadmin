@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getTubes } from '../api/tubes.api';
+import { getTubes, downloadTube } from '../api/tubes.api';
+import { basename } from 'path';
 
 class Tubes extends Component {
     constructor(props) {
@@ -22,13 +23,24 @@ class Tubes extends Component {
     async componentWillReceiveProps(nextProps) {
         if (nextProps.apiBaseUrl !== this.props.apiBaseUrl) await this.loadTubes(nextProps.apiBaseUrl);
     }
+    downloadClick(baseurl, tuburl, tubname, onMessage) {
+        return () => {
+            downloadTube(baseurl, tuburl, tubname, onMessage);
+        }
+    }
     render() {
         return (
             <div>
             <h1>Tubes</h1>
             <ul className="list-group">
             {(this.state.tubes || []).map((tub, idx) => {
-                return <li className="list-group-item" key={idx}><a href={`${this.state.apiBaseUrl}${tub.url}`}>{tub.name}</a></li>
+//                return <li className="list-group-item" key={idx}><a href={`${this.state.apiBaseUrl}${tub.url}`} target='_blank'>{tub.name}</a></li>
+                return <li className="list-group-item" key={idx}>
+                    <div className="row">
+                        <div className="col-md-9"><span>{tub.name}</span></div>
+                        <div className="col-md-3"><button className="btn btn-outline-primary" onClick={this.downloadClick(this.state.apiBaseUrl, tub.url, tub.name, this.props.onMessage)}>Download</button></div>
+                    </div>
+                </li>
             })}
             </ul>
             </div>

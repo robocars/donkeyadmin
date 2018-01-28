@@ -29,7 +29,8 @@ class MessageBox extends Component {
     }
     componentWillReceiveProps(nextProps) {
         this.setState(nextProps);
-        this.setupSocket(nextProps.apiBaseUrl);
+        if (this.props.apiBaseUrl !== nextProps.apiBaseUrl)
+            this.setupSocket(nextProps.apiBaseUrl);
     }
     render() {
         return (
