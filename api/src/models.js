@@ -17,7 +17,7 @@ const readdir = promisify(fs.readdir);
 
 const router = express.Router();
 
-router.get('/models', async (req, res) => {
+router.get('/', async (req, res) => {
     const root = config.get('models.root');
     res.json((await readdir(root)).map((dir) => ({
         name: dir,
@@ -35,7 +35,7 @@ router.get('/models', async (req, res) => {
     })));
 });
 
-router.post('/models', model_upload.single('model'), async (req, res) => {
+router.post('/', model_upload.single('model'), async (req, res) => {
     res.json({
         status: 'OK'
     })

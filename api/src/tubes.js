@@ -10,7 +10,7 @@ const fsstat = promisify(fs.stat);
 
 const router = express.Router();
 
-router.get('/tubes', async (req, res) => {
+router.get('/', async (req, res) => {
     const root = config.get('tubes.root');
     res.json((await readdir(root)).map((dir) => ({
         name: dir,
@@ -18,7 +18,7 @@ router.get('/tubes', async (req, res) => {
     })));
 });
 
-router.get('/tubes/:tubId', (req, res) => {
+router.get('/:tubId', (req, res) => {
     const root = config.get('tubes.root');
     const archive = archiver('zip');
     archive.pipe(res);

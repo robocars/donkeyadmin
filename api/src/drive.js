@@ -8,7 +8,7 @@ const router = express.Router();
 let pyshell = null;
 let options = {};
 
-router.post('/drive/start', async (req, res) => {
+router.post('/start', async (req, res) => {
     if (pyshell) {
         return res.status(400).json({
             message: 'Already running, stop first'
@@ -48,7 +48,7 @@ router.post('/drive/start', async (req, res) => {
     });
 });
 
-router.post('/drive/stop', async (req, res) => {
+router.post('/stop', async (req, res) => {
     if (pyshell) {
         await pyshell.end();
         pyshell = null;
