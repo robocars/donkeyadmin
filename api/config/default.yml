@@ -3,4 +3,5 @@ tubes:
 models:
   root: '/home/pi/models'
 car:
-  path: '~/d2'
+  path: '/home/pi/d2'
+  cwd: '/home/pi'

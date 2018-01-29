@@ -21,7 +21,8 @@ router.post('/start', async (req, res) => {
     if (req.query.controller) args.push('--' + req.query.controller);
     pyshell = new PythonShell('manage.py', {
         scriptPath: config.get('car.path'),
-        args
+        args,
+        cwd: config.get('car.cwd')
     });
     res.json({
         status: 'LAUNCHING'
