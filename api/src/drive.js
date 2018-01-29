@@ -52,7 +52,12 @@ router.post('/start', async (req, res) => {
 
 router.post('/stop', async (req, res) => {
     if (pyshell) {
-        await pyshell.end();
+        pyshell.end(() => {
+            options.io && options.io.emit('drive', {
+                type: 'close',
+                message: 'Closed by user'
+            });
+        });
         pyshell = null;
     }
     res.json({
