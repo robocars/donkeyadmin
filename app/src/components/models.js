@@ -55,16 +55,18 @@ class Models extends Component {
                     </div>                   
                     
                 </form>
-                <ul className="list-group">
-                {(this.state.models || []).map((model, idx) => {
-                    return <li className="list-group-item" key={idx}>
-                    <div className="row">
-                        <div className="col-md-10"><span>{model.name}</span></div>
-                        <div className="col-md-2"><button type="button" className="btn btn-outline-primary" onClick={this.executeModelLink(model.$links.drive)}>Drive</button></div>
-                        </div>
-                    </li>
-                })}
-                </ul>
+                <div style={{ height: '280px', overflow: 'auto' }}>
+                    <ul className="list-group">
+                    {(this.state.models || []).map((model, idx) => {
+                        return <li className="list-group-item" key={idx}>
+                        <div className="row">
+                            <div className="col-md-10"><span>{model.name}</span></div>
+                            <div className="col-md-2"><button type="button" className="btn btn-outline-primary" onClick={this.executeModelLink(model.$links.drive)}>Drive</button></div>
+                            </div>
+                        </li>
+                    })}
+                    </ul>
+                </div>
             </div>
         )
     }

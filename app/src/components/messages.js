@@ -36,7 +36,7 @@ class MessageBox extends Component {
         return (
             <div>
                 <h1>Messages</h1>
-                <div style={{ 'text-align': 'left' }}>
+                <div style={{ 'text-align': 'left', height: '400px', overflow: 'auto' }}>
                     {this.state.messages.map((message) => {
                         if (typeof message === 'object') {
                             let color = 'black';

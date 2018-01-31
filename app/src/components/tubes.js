@@ -32,6 +32,7 @@ class Tubes extends Component {
         return (
             <div>
             <h1>Tubes</h1>
+            <div style={{ heigth: '300px', overflow: 'auto' }}>
             <ul className="list-group">
             {(this.state.tubes || []).map((tub, idx) => {
 //                return <li className="list-group-item" key={idx}><a href={`${this.state.apiBaseUrl}${tub.url}`} target='_blank'>{tub.name}</a></li>
@@ -43,6 +44,7 @@ class Tubes extends Component {
                 </li>
             })}
             </ul>
+            </div>
             </div>
         )
     }
